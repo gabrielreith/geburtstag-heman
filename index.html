@@ -1,46 +1,67 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geheimer Song</title>
+  <title>Dirty Thirty</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <main class="container">
-    <h1>🎁 Geheimer Geburtstags-Song</h1>
-    <p class="subtitle">
-      Löse das Kreuzworträtsel und gib das Passwort ein, um den Song freizuschalten.
-    </p>
+    <h1>Heman - 30 Jahre und doch nix gelernt</h1>
 
-    <section class="card">
-      <label for="password">Passwort</label>
-      <div class="row">
-        <input
-          id="password"
-          type="password"
-          placeholder="Passwort eingeben…"
-          autocomplete="off"
-          spellcheck="false"
-        />
-        <button id="unlockBtn" type="button">Freischalten</button>
-      </div>
-
-      <p id="message" class="message" aria-live="polite"></p>
-
-      <div id="playerWrap" class="player hidden">
-        <p class="success">✅ Freigeschaltet! Viel Spaß 😄</p>
-        <!-- Lege deine Datei als song.mp3 ins Repo (gleicher Ordner wie index.html) -->
-        <audio id="audio" controls preload="metadata">
-          <source src="song.mp3" type="audio/mpeg" />
-          Dein Browser unterstützt kein Audio-Element.
-        </audio>
-      </div>
+    <!-- Obere Bilder: ohne Lücke -->
+    <section class="image-row no-gap" aria-label="Bilder oben">
+      <img class="img" src="3.png" alt="Bild b1" />
+      <img class="img" src="0.png" alt="Bild b2" />
     </section>
 
-    <footer class="footer">
-      <small>Hinweis: Passwort ist nicht wirklich “sicher” (Client-side), aber für ein Geburtstagsrätsel perfekt 🙂</small>
-    </footer>
+    <section class="image-row single-full" aria-label="Einzelbild">
+  <img class="img-full" src="eich_yugi.png" alt="Eich Yu-Gi-Oh" />
+</section>
+
+    <!-- Passwortbereich -->
+    <section class="card">
+  <label for="password">Lösungswort</label>
+
+  <div class="row">
+    <input
+      id="password"
+      type="password"
+      placeholder="Lösungswort eingeben…"
+      autocomplete="off"
+      spellcheck="false"
+    />
+    <button id="unlockBtn" type="button">Freischalten</button>
+  </div>
+
+  <p id="message" class="message" aria-live="polite"></p>
+</section>
+
+    <!-- Untere Bilder: kleine Lücke -->
+   <section class="image-row small-gap" aria-label="Bilder unten">
+  <img id="pokeImg" class="img" src="poke_rueck.png" alt="Pokémon Rückseite" />
+
+  <div class="img-wrapper">
+    <img
+      id="yugiImg"
+      class="img"
+      src="yugi-rueck.png"
+      alt="Yu-Gi-Oh Rückseite"
+    />
+
+    <!-- Audio liegt auf dem Bild -->
+    <audio
+      id="audio"
+      class="audio-overlay hidden"
+      controls
+      preload="metadata"
+    >
+      <source src="song.mp3" type="audio/mpeg" />
+      Dein Browser unterstützt kein Audio-Element.
+    </audio>
+  </div>
+</section>
   </main>
 
   <script src="script.js"></script>
