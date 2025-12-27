@@ -1,0 +1,48 @@
+ <!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geheimer Song</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>🎁 Geheimer Geburtstags-Song</h1>
+    <p class="subtitle">
+      Löse das Kreuzworträtsel und gib das Passwort ein, um den Song freizuschalten.
+    </p>
+
+    <section class="card">
+      <label for="password">Passwort</label>
+      <div class="row">
+        <input
+          id="password"
+          type="password"
+          placeholder="Passwort eingeben…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="unlockBtn" type="button">Freischalten</button>
+      </div>
+
+      <p id="message" class="message" aria-live="polite"></p>
+
+      <div id="playerWrap" class="player hidden">
+        <p class="success">✅ Freigeschaltet! Viel Spaß 😄</p>
+        <!-- Lege deine Datei als song.mp3 ins Repo (gleicher Ordner wie index.html) -->
+        <audio id="audio" controls preload="metadata">
+          <source src="song.mp3" type="audio/mpeg" />
+          Dein Browser unterstützt kein Audio-Element.
+        </audio>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <small>Hinweis: Passwort ist nicht wirklich “sicher” (Client-side), aber für ein Geburtstagsrätsel perfekt 🙂</small>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
