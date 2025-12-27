@@ -1,5 +1,12 @@
-// Passwort (für deinen Usecase reicht das)
 const CORRECT_PASSWORD = "holzkopp";
+
+// Bilder unten (Rückseite -> Vorderseite)
+const pokeImg = document.getElementById("pokeImg");
+const yugiImg = document.getElementById("yugiImg");
+
+// Zielbilder (Vorderseiten)
+const POKE_FRONT_SRC = "poke-vor.png";
+const YUGI_FRONT_SRC = "yugi-vor.jpeg";
 
 const input = document.getElementById("password");
 const btn = document.getElementById("unlockBtn");
@@ -13,26 +20,48 @@ function setMessage(text, type) {
   if (type) msg.classList.add(type);
 }
 
+function swapImage(imgEl, newSrc) {
+  if (!imgEl) return;
+
+  // Falls schon getauscht, nichts machen
+  if (imgEl.getAttribute("src") === newSrc) return;
+
+  imgEl.classList.add("swap-out");
+
+  // Nach kurzem Fade: src wechseln, wieder einblenden
+  setTimeout(() => {
+    imgEl.src = newSrc;
+    imgEl.classList.remove("swap-out");
+  }, 180);
+}
+
 function unlockIfCorrect() {
   const entered = (input.value || "").trim().toLowerCase();
 
   if (!entered) {
-    setMessage("Bitte Passwort eingeben.", "error");
+    setMessage("Bitte das Lösungswort eingeben.", "error");
     return;
   }
 
   if (entered === CORRECT_PASSWORD) {
-    setMessage("Richtig! Song ist freigeschaltet ✅", "ok");
-    playerWrap.classList.remove("hidden");
+  setMessage("Richtig! Freigeschaltet ✅", "ok");
 
-    // Optional: Passwortfeld sperren nach Erfolg
-    input.disabled = true;
-    btn.disabled = true;
+  // Bilder tauschen
+  swapImage(pokeImg, POKE_FRONT_SRC);
+  swapImage(yugiImg, YUGI_FRONT_SRC);
 
-    // Optional: gleich abspielen (Browser kann das blocken, wenn nicht user-initiated)
-    // audio.play().catch(() => {});
+  // Audio anzeigen
+  audio.classList.remove("hidden");
+
+  input.disabled = true;
+  btn.disabled = true;
+  btn.blur();
+
+  // optional: autoplay (Browser kann blocken)
+  // audio.play().catch(() => {});
   } else {
-    setMessage("Leider falsch – versuch’s nochmal 👀", "error");
+    setMessage("Nope 😄 Versuch’s nochmal!", "error");
+    input.focus();
     input.select();
   }
 }
