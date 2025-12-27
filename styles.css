@@ -196,7 +196,7 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
 .audio-overlay {
   position: absolute;
   left: 50%;
-  bottom: 31%;
+  bottom: 27%;
   transform: translateX(-50%);
   width: 90%;
   z-index: 2;
