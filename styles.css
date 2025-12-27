@@ -196,7 +196,7 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
 .audio-overlay {
   position: absolute;
   left: 50%;
-  bottom: 27%;
+  bottom: 31%;
   transform: translateX(-50%);
   width: 90%;
   z-index: 2;
@@ -248,8 +248,16 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
 
 @media (max-width: 600px) {
   .audio-overlay {
-    bottom: 27%;
+    bottom: 22%;
     width: 94%;
   }
 }
 
+/* Karten nach Freischaltung klickbar wirken lassen */
+.flippable {
+  cursor: pointer;
+}
+
+.flippable:active {
+  transform: translateY(1px);
+}
