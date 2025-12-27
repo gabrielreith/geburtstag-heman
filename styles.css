@@ -248,7 +248,7 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
 
 @media (max-width: 600px) {
   .audio-overlay {
-    bottom: 22%;
+    bottom: 23%;
     width: 94%;
   }
 }
