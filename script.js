@@ -1,18 +1,17 @@
 const CORRECT_PASSWORD = "holzkopp";
 
-// Bilder unten (Rückseite -> Vorderseite)
 const pokeImg = document.getElementById("pokeImg");
 const yugiImg = document.getElementById("yugiImg");
+const audio = document.getElementById("audio");
 
-// Zielbilder (Vorderseiten)
 const POKE_FRONT_SRC = "poke-vor.png";
 const YUGI_FRONT_SRC = "yugi-vor.jpeg";
 
 const input = document.getElementById("password");
 const btn = document.getElementById("unlockBtn");
 const msg = document.getElementById("message");
-const playerWrap = document.getElementById("playerWrap");
-const audio = document.getElementById("audio");
+
+let isUnlocked = false;
 
 function setMessage(text, type) {
   msg.textContent = text;
@@ -22,17 +21,34 @@ function setMessage(text, type) {
 
 function swapImage(imgEl, newSrc) {
   if (!imgEl) return;
-
-  // Falls schon getauscht, nichts machen
   if (imgEl.getAttribute("src") === newSrc) return;
 
   imgEl.classList.add("swap-out");
-
-  // Nach kurzem Fade: src wechseln, wieder einblenden
   setTimeout(() => {
     imgEl.src = newSrc;
     imgEl.classList.remove("swap-out");
   }, 180);
+}
+
+function enableCardFlips() {
+  // Pokémon-Karte: Klick -> umdrehen
+  if (pokeImg) {
+    pokeImg.addEventListener("click", () => {
+      if (!isUnlocked) return;
+      swapImage(pokeImg, POKE_FRONT_SRC);
+    });
+  }
+
+  // Yu-Gi-Oh-Karte: Klick -> umdrehen + Audio zeigen
+  if (yugiImg) {
+    yugiImg.addEventListener("click", () => {
+      if (!isUnlocked) return;
+      swapImage(yugiImg, YUGI_FRONT_SRC);
+
+      // Audio erst zeigen, wenn er die Karte wirklich "umdreht"
+      audio.classList.remove("hidden");
+    });
+  }
 }
 
 function unlockIfCorrect() {
@@ -44,21 +60,15 @@ function unlockIfCorrect() {
   }
 
   if (entered === CORRECT_PASSWORD) {
-  setMessage("Richtig! Freigeschaltet ✅", "ok");
+    isUnlocked = true;
+    setMessage("Richtig! Jetzt kannst du die Karten antippen, um sie umzudrehen 👇", "ok");
 
-  // Bilder tauschen
-  swapImage(pokeImg, POKE_FRONT_SRC);
-  swapImage(yugiImg, YUGI_FRONT_SRC);
+    input.disabled = true;
+    btn.disabled = true;
+    btn.blur();
 
-  // Audio anzeigen
-  audio.classList.remove("hidden");
-
-  input.disabled = true;
-  btn.disabled = true;
-  btn.blur();
-
-  // optional: autoplay (Browser kann blocken)
-  // audio.play().catch(() => {});
+    // erst ab jetzt ist Klicken sinnvoll
+    enableCardFlips();
   } else {
     setMessage("Nope 😄 Versuch’s nochmal!", "error");
     input.focus();
