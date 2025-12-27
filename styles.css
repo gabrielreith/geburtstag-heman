@@ -25,19 +25,80 @@ body {
 }
 
 .container {
-  width: min(720px, 100%);
+  width: min(820px, 100%);
 }
 
 h1 {
-  margin: 0 0 8px;
-  font-size: clamp(26px, 3vw, 36px);
+  margin: 0 0 14px;
+  font-size: clamp(24px, 3.2vw, 38px);
   letter-spacing: 0.2px;
+  line-height: 1.1;
 }
 
-.subtitle {
-  margin: 0 0 18px;
-  color: var(--muted);
-  line-height: 1.4;
+/* Bildreihen */
+.image-row {
+  display: flex;
+  width: 100%;
+  margin: 12px 0;
+}
+
+.image-row.no-gap {
+  gap: 0;              /* wichtig: keine Lücke */
+}
+
+.image-row.small-gap {
+ flex-direction: column;
+  align-items: center;   /* ⬅ zentriert die Karten */
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* Bilder */
+.img {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.25);
+  transition: opacity 180ms ease;
+}
+
+.img.swap-out {
+  opacity: 0;
+}
+
+/* Oben: "verbunden" -> keine Rundungen in der Mitte */
+.image-row.no-gap .img:first-child {
+  border-radius: 16px 0 0 16px;
+  border-right: 0; /* verhindert doppelte Linie in der Mitte */
+}
+
+.image-row.no-gap .img:last-child {
+  border-radius: 0 16px 16px 0;
+}
+
+/* Unten: getrennt, mit Rundungen */
+.image-row.small-gap .img {
+  border-radius: 16px;
+}
+
+* Untere Bilder sollen volle Breite haben */
+.image-row.small-gap .img,
+.image-row.small-gap .img-wrapper {
+  width: 100%;
+  max-width: 100%;       /* Sicherheitsnetz */
+}
+
+/* Unten: getrennt, mit Rundungen (nur Radius hier lassen) */
+.image-row.small-gap .img {
+  border-radius: 16px;
+}
+
+/* Wrapper für Bild + Audio (unten) */
+.img-wrapper {
+  position: relative;
+  width: 100%; /* ⬅ war 50% */
 }
 
 .card {
@@ -47,13 +108,14 @@ h1 {
   padding: 18px;
   backdrop-filter: blur(10px);
   box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  margin-top: 10px;
 }
 
 label {
   display: block;
   margin-bottom: 8px;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .row {
@@ -84,13 +146,14 @@ button {
   border: 1px solid rgba(124,92,255,0.6);
   background: rgba(124,92,255,0.22);
   color: var(--text);
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
-  transition: transform 0.05s ease, background 0.2s ease;
+  transition: transform 0.05s ease, background 0.2s ease, opacity 0.2s ease;
 }
 
 button:hover { background: rgba(124,92,255,0.3); }
 button:active { transform: translateY(1px); }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .message {
   min-height: 22px;
@@ -110,14 +173,81 @@ button:active { transform: translateY(1px); }
 .success {
   margin: 0 0 10px;
   color: var(--ok);
-  font-weight: 700;
+  font-weight: 800;
 }
 
-.hidden {
-  display: none;
-}
+.hidden { display: none; }
 
 .footer {
   margin-top: 14px;
   color: var(--muted);
 }
+
+/* Wrapper für Bild + Audio */
+.img-wrapper {
+  position: relative;
+  width: 50%;
+}
+
+/* Audio-Overlay */
+.audio-overlay {
+  position: absolute;
+  left: 50%;
+  bottom: 31%;
+  transform: translateX(-50%);
+  width: 90%;
+  z-index: 2;
+
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 12px;
+  padding: 6px;
+}
+
+/* sorgt dafür, dass Bild die volle Breite nutzt */
+.img-wrapper .img {
+  width: 100%;
+}
+
+/* Einzelnes Bild – volle Breite */
+.image-row.single-full {
+  width: 100%;
+  margin: 16px 0;
+}
+
+.img-full {
+  width: 100%;
+  height: auto;
+  display: block;
+
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  object-fit: cover;
+  background: rgba(0,0,0,0.25);
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 26px;
+    line-height: 1.2;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .row {
+    grid-template-columns: 1fr; /* ⬅ untereinander */
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .audio-overlay {
+    bottom: 22%;
+    width: 94%;
+  }
+}
+
+
